@@ -13,7 +13,7 @@
     </style>
 </head>
 <body>
-    <h1>🧾 Receipt Tracker</h1>
+    <h1>Receipt Tracker</h1>
 
     <div class="section">
         <h2>Upload Struk</h2>
@@ -32,6 +32,13 @@
         <div id="upload-result"></div>
     </div>
 
+    <div class="section">
+        <h2>Tanya AI</h2>
+        <input type="text" id="question" placeholder="misal: makanan apa yang aku beli kemarin?">
+        <button id="ask-btn">Tanya</button>
+        <div id="ask-result"></div>
+    </div>
+
     <script>
         document.getElementById("upload-form").addEventListener("submit", async (e) => {
             e.preventDefault();
@@ -45,6 +52,19 @@
             const res = await fetch("/upload", { method: "POST", body: formData });
             const data = await res.json();
             document.getElementById("upload-result").textContent = JSON.stringify(data, null, 2);
+        });
+
+        document.getElementById("ask-btn").addEventListener("click", async () => {
+            const question = document.getElementById("question").value;
+            document.getElementById("ask-result").textContent = "Berpikir...";
+
+            const res = await fetch("/ask", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ question })
+            });
+            const data = await res.json();
+            document.getElementById("ask-result").textContent = data.answer || data.error;
         });
     </script>
 </body>

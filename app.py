@@ -5,6 +5,7 @@ import pytesseract
 
 from parse_receipt import parse_receipt_text
 from db import init_db, insert_item
+from llm_tools import ask
 
 app = Flask(__name__)
 init_db()
@@ -45,6 +46,17 @@ def upload():
         "items_saved": len(items),
         "items": items
     })
+
+@app.route("/ask", methods=["POST"])
+def ask_question():
+    data = request.get_json()
+    question = data.get("question")
+
+    if not question:
+        return jsonify({"error": "Pertanyaan tidak boleh kosong"}), 400
+
+    answer = ask(question)
+    return jsonify({"answer": answer})
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5002, debug=True)
