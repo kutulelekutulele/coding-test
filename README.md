@@ -16,7 +16,7 @@
 ## Task 6: Docker & CI/CD
 - `Dockerfile`, `.dockerignore`, `.github/workflows/docker-build.yml`
 
-## Jalanin (Task 5)
+## Note for Task 5
 ```bash
 pip install -r requirements.txt
 brew install tesseract
