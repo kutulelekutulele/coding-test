@@ -5,3 +5,5 @@ __pycache__/
 customers-2000000.csv
 
 vector_db_data.json
+
+.env
